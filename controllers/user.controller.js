@@ -162,3 +162,25 @@ module.exports.updateUser = async (req, res) => {
 		});
 	}
 };
+
+module.exports.filterCollege = async (req, res) => {
+    try {
+        const collegeId = req.body.collegeId;
+        const users = await db.models.users.findAll({
+            where: {
+                collegeId: collegeId
+            }
+        })
+        res.status(200).json({
+            success: true,
+            users: users
+        })
+    } catch (e) {
+        console.log(e)
+        res.status(500).json({
+            success: false,
+            message: "Internal server error",
+            details: e.message
+        })
+    }
+}
